@@ -1,0 +1,2 @@
+# Core runtime intentionally uses Python standard library only.
+# Optional: add pytest if you prefer it over unittest.

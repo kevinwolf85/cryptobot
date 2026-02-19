@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptoBot Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="layout">
+    <header>
+      <h1>Crypto Paper Trading</h1>
+      <p id="meta"></p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Account</h2>
+        <div id="account"></div>
+      </article>
+
+      <article class="card">
+        <h2>Signal</h2>
+        <div id="signal"></div>
+      </article>
+
+      <article class="card">
+        <h2>Bot Health</h2>
+        <div id="health"></div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <h2>Trades</h2>
+        <button id="tickBtn">Run Tick Now</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Time (UTC)</th>
+            <th>Side</th>
+            <th>Symbol</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="trades"></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
