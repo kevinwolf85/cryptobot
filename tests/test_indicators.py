@@ -1,6 +1,6 @@
 import unittest
 
-from cryptobot.indicators import crossover_direction, ema, macd_series
+from cryptobot.indicators import crossover_direction, ema, macd_series, rsi_series
 
 
 class IndicatorTests(unittest.TestCase):
@@ -22,6 +22,12 @@ class IndicatorTests(unittest.TestCase):
         macd = [0.1, -0.1, 0.2]
         signal = [0.2, 0.0, 0.1]
         self.assertEqual(crossover_direction(macd, signal), "bullish")
+
+    def test_rsi_bounds(self):
+        closes = [100, 101, 99, 102, 98, 103, 97, 104, 96, 105, 95, 106, 94, 107, 93, 108]
+        values = rsi_series(closes, period=14)
+        self.assertEqual(len(values), len(closes))
+        self.assertTrue(all(0.0 <= x <= 100.0 for x in values))
 
 
 if __name__ == "__main__":

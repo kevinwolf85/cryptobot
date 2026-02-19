@@ -45,3 +45,33 @@ def crossover_direction(macd: list[float], signal: list[float]) -> str:
     if prev_diff >= 0 > curr_diff:
         return "bearish"
     return "none"
+
+
+def rsi_series(closes: Iterable[float], period: int = 14) -> list[float]:
+    values = list(closes)
+    if period <= 0:
+        raise ValueError("period must be > 0")
+    if len(values) < 2:
+        return [50.0 for _ in values]
+
+    gains = [0.0]
+    losses = [0.0]
+    for i in range(1, len(values)):
+        delta = values[i] - values[i - 1]
+        gains.append(max(delta, 0.0))
+        losses.append(max(-delta, 0.0))
+
+    avg_gain = sum(gains[1 : period + 1]) / period if len(values) > period else sum(gains[1:]) / max(len(values) - 1, 1)
+    avg_loss = sum(losses[1 : period + 1]) / period if len(values) > period else sum(losses[1:]) / max(len(values) - 1, 1)
+
+    out: list[float] = [50.0] * len(values)
+    start = min(period + 1, len(values))
+    for i in range(start, len(values)):
+        avg_gain = ((avg_gain * (period - 1)) + gains[i]) / period
+        avg_loss = ((avg_loss * (period - 1)) + losses[i]) / period
+        if avg_loss == 0:
+            out[i] = 100.0
+        else:
+            rs = avg_gain / avg_loss
+            out[i] = 100.0 - (100.0 / (1.0 + rs))
+    return out
